@@ -1,0 +1,144 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: certsuite
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: certsuite-cr
+rules:
+  - apiGroups: ["*"]
+    resources: ["*"]
+    verbs: ["*"]
+  - nonResourceURLs: ["*"]
+    verbs: ["*"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: certsuite-crb
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: certsuite
+roleRef:
+  kind: ClusterRole
+  name: certsuite-cr
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: certsuite-config
+  namespace: certsuite
+data:
+  certsuite_config.yml: |
+    targetNameSpaces:
+      - name: tnf
+    podsUnderTestLabels:
+      - "redhat-best-practices-for-k8s.com/generic: target"
+    operatorsUnderTestLabels:
+      - "redhat-best-practices-for-k8s.com/operator:target"
+      - "redhat-best-practices-for-k8s.com/operator1:new"
+      - "cnf/test:cr-scale-operator"
+    targetCrdFilters:
+      - nameSuffix: "group1.test.com"
+        scalable: false
+      - nameSuffix: "redhat-best-practices-for-k8s.com"
+        scalable: false
+      - nameSuffix: "memcacheds.cache.example.com"
+        scalable: true
+    managedDeployments:
+      - name: memcached-sample
+    managedStatefulsets:
+      - name: memcached-sample
+    acceptedKernelTaints:
+      - module: vboxsf
+      - module: vboxguest
+    skipScalingTestDeployments:
+      - name: deployment1
+        namespace: tnf
+    skipScalingTestStatefulsets:
+      - name: statefulset1
+        namespace: tnf
+    skipHelmChartList:
+      - name: coredns
+    validProtocolNames:
+      - "http3"
+      - "sctp"
+    servicesignorelist:
+      - "new-pro-controller-manager-metrics-service"
+      - "mysql"
+    executedBy: ""
+    partnerName: ""
+    collectorAppPassword: ""
+    collectorAppEndpoint: "http://claims-collector.cnf-certifications.sysdeseng.com"
+    connectAPIConfig:
+      baseURL: "https://access.redhat.com/hydra/cwe/rest/v1.0"
+      apiKey: ""
+      projectID: ""
+      proxyURL: ""
+      proxyPort: ""
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: certsuite-preflight-dockerconfig
+  namespace: certsuite
+type: Opaque
+data:
+  # Sample of empty content, base64-coded: '{ "auths": {} }'
+  preflight_dockerconfig.json: |
+    eyAiYXV0aHMiOiB7fSB9Cg==
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: certsuite
+  namespace: certsuite
+  labels:
+    app: certsuite
+spec:
+  serviceAccountName: default
+  restartPolicy: Never
+  volumes:
+    - name: config-volume
+      configMap:
+        name: certsuite-config
+    - name: preflight-dockerconfig
+      secret:
+        secretName: certsuite-preflight-dockerconfig
+  containers:
+    - name: certsuite
+      imagePullPolicy: Always
+      image: quay.io/redhat-best-practices-for-k8s/certsuite:latest
+      resources:
+        limits:
+          memory: 500Mi
+          cpu: 50m
+      command: ["sh"]
+      args:
+        - "-c"
+        - |
+          certsuite run -l '!affiliated-certification-container-is-certified-digest && !access-control-security-context' --intrusive=false ; sleep inf
+      volumeMounts:
+        - name: config-volume
+          mountPath: /usr/certsuite/config
+        - name: preflight-dockerconfig
+          mountPath: /usr/certsuite/config/preflight
+      env:
+        - name: CERTSUITE_ALLOW_PREFLIGHT_INSECURE
+          value: "true"
+        - name: CERTSUITE_LOG_LEVEL
+          value: trace
+        - name: PFLT_DOCKERCONFIG
+          value: /usr/certsuite/config/preflight/preflight_dockerconfig.json
+        - name: CERTSUITE_CONFIGURATION_PATH
+          value: /usr/certsuite/config/certsuite_config.yaml

@@ -806,6 +806,23 @@ Test Cases are the specifications used to perform a meaningful test. Test cases 
 |Non-Telco|Mandatory|
 |Telco|Mandatory|
 
+#### lifecycle-topology-spread-constraint
+
+|Property|Description|
+|---|---|
+|Unique ID|lifecycle-topology-spread-constraint|
+|Description|Ensures that Deployments using TopologySpreadConstraints include constraints for both hostname and zone topology keys. This helps telco workloads avoid needing to tweak PodDisruptionBudgets before platform upgrades. If TopologySpreadConstraints is not defined, the test passes as Kubernetes scheduler implicitly uses hostname and zone constraints. Not applicable to SNO applications.|
+|Suggested Remediation|If using TopologySpreadConstraints in your Deployment, ensure you include constraints for both 'kubernetes.io/hostname' and 'topology.kubernetes.io/zone' topology keys. Alternatively, you can omit TopologySpreadConstraints entirely to let Kubernetes scheduler use implicit hostname and zone constraints. This helps maintain workload availability during platform upgrades without manually adjusting PodDisruptionBudgets.|
+|Best Practice Reference|https://redhat-best-practices-for-k8s.github.io/guide/#k8s-best-practices-high-level-cnf-expectations|
+|Exception Process|There is no documented exception process for this.|
+|Impact Statement|Improperly configured topology spread constraints can lead to pod scheduling failures during platform upgrades, requiring manual PodDisruptionBudget adjustments and potentially causing service disruptions. Without proper hostname and zone constraints, workloads may not be evenly distributed across failure domains.|
+|Tags|telco,lifecycle|
+|**Scenario**|**Optional/Mandatory**|
+|Extended|Optional|
+|Far-Edge|Optional|
+|Non-Telco|Optional|
+|Telco|Mandatory|
+
 #### lifecycle-pod-scheduling
 
 |Property|Description|

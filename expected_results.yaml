@@ -80,6 +80,7 @@ testCases:
     - lifecycle-cpu-isolation
     - lifecycle-statefulset-scaling
     - lifecycle-storage-provisioner
+    - lifecycle-topology-spread-constraint
     - networking-dpdk-cpu-pinning-exec-probe
     - networking-icmpv6-connectivity
     - networking-restart-on-reboot-sriov-pod

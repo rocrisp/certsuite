@@ -9,10 +9,6 @@
       
       
       
-        <link rel="prev" href="../runtime-env/">
-      
-      
-        <link rel="next" href="../test-spec/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -20,7 +16,7 @@
     
     
       
-        <title>Run - Red Hat Best Practices Test Suite for Kubernetes</title>
+        <title>Disconnected - Red Hat Best Practices Test Suite for Kubernetes</title>
       
     
     
@@ -72,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#run-the-test-suite" class="md-skip">
+        <a href="#running-the-certsuite-in-a-disconnected-environment" class="md-skip">
           Skip to content
         </a>
       
@@ -106,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Run
+              Disconnected
             
           </span>
         </div>
@@ -248,11 +244,9 @@
         
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../test-run/" class="md-tabs__link">
         
   
     
@@ -539,30 +533,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Run
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../test-run/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -571,95 +545,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#building-the-certsuite-tool-executable" class="md-nav__link">
-    <span class="md-ellipsis">
-      Building the Certsuite tool executable
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#test-labels" class="md-nav__link">
-    <span class="md-ellipsis">
-      Test labels
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#disable-intrusive-tests" class="md-nav__link">
-    <span class="md-ellipsis">
-      Disable intrusive tests
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#selected-flags-description" class="md-nav__link">
-    <span class="md-ellipsis">
-      Selected flags description
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#using-the-container-image" class="md-nav__link">
-    <span class="md-ellipsis">
-      Using the container image
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Using the container image">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pull-the-test-image" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pull the test image
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#launch-the-test-suite" class="md-nav__link">
-    <span class="md-ellipsis">
-      Launch the Test Suite
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1013,64 +898,199 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#building-the-certsuite-tool-executable" class="md-nav__link">
+  <a href="#the-problem" class="md-nav__link">
     <span class="md-ellipsis">
-      Building the Certsuite tool executable
+      The Problem
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#test-labels" class="md-nav__link">
+  <a href="#images-required" class="md-nav__link">
     <span class="md-ellipsis">
-      Test labels
+      Images Required
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#disable-intrusive-tests" class="md-nav__link">
+  <a href="#approach-1-oc-mirror-v2-recommended" class="md-nav__link">
     <span class="md-ellipsis">
-      Disable intrusive tests
+      Approach 1: oc-mirror v2 (Recommended)
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#selected-flags-description" class="md-nav__link">
-    <span class="md-ellipsis">
-      Selected flags description
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#using-the-container-image" class="md-nav__link">
-    <span class="md-ellipsis">
-      Using the container image
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Using the container image">
+    <nav class="md-nav" aria-label="Approach 1: oc-mirror v2 (Recommended)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#pull-the-test-image" class="md-nav__link">
+  <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
-      Pull the test image
+      Prerequisites
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#launch-the-test-suite" class="md-nav__link">
+  <a href="#step-1-create-the-imagesetconfiguration" class="md-nav__link">
     <span class="md-ellipsis">
-      Launch the Test Suite
+      Step 1: Create the ImageSetConfiguration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-mirror-images-to-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Mirror images to disk
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-transfer-the-archive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: Transfer the archive
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-load-images-into-the-mirror-registry" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 4: Load images into the mirror registry
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-apply-the-generated-cluster-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 5: Apply the generated cluster resources
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-run-the-certsuite" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 6: Run the certsuite
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#approach-2-manual-mirroring-with-skopeo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Approach 2: Manual Mirroring with skopeo
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Approach 2: Manual Mirroring with skopeo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-copy-images-to-the-mirror-registry" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Copy images to the mirror registry
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-run-the-certsuite-with-the-mirrored-probe-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Run the certsuite with the mirrored probe image
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#offline-certification-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Offline Certification Database
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Offline Certification Database">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-the-offline-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating the offline database
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-the-offline-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using the offline database
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verification
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Verification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#verify-images-are-in-the-mirror-registry" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verify images are in the mirror registry
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-idmsitms-is-active-oc-mirror-approach-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verify IDMS/ITMS is active (oc-mirror approach only)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-the-probe-daemonset-starts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verify the probe DaemonSet starts
     </span>
   </a>
   
@@ -1099,169 +1119,204 @@
   
 
 
-<!-- markdownlint-disable code-block-style line-length no-bare-urls no-emphasis-as-heading -->
-<h1 id="run-the-test-suite">Run the Test Suite<a class="headerlink" href="#run-the-test-suite" title="Permanent link">&para;</a></h1>
-<p>The Test Suite can be run using the Certsuite tool directly or through a container.</p>
-<p>To run the Test Suite direct use:</p>
-<div class="highlight"><pre><span></span><code>certsuite<span class="w"> </span>run<span class="w"> </span>-l<span class="w"> </span>&lt;label-filter&gt;<span class="w"> </span>-c<span class="w"> </span>&lt;certsuite-config&gt;<span class="w"> </span>-k<span class="w"> </span>&lt;kubeconfig&gt;<span class="w"> </span>-o<span class="w"> </span>&lt;output-dir&gt;<span class="w"> </span><span class="o">[</span>&lt;flags&gt;<span class="o">]</span>
+<!-- markdownlint-disable line-length no-bare-urls -->
+<h1 id="running-the-certsuite-in-a-disconnected-environment">Running the Certsuite in a Disconnected Environment<a class="headerlink" href="#running-the-certsuite-in-a-disconnected-environment" title="Permanent link">&para;</a></h1>
+<p>This guide explains how to run the certsuite against an air-gapped or
+disconnected OpenShift cluster where nodes cannot pull container images from
+external registries.</p>
+<p>For general information on disconnected OpenShift environments, see the
+<a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.21/html/disconnected_environments/about-installing-oc-mirror-v2">Red Hat disconnected environments documentation</a>.
+The <a href="https://github.com/openshift/oc-mirror">oc-mirror GitHub repository</a>
+contains additional examples and source code.</p>
+<h2 id="the-problem">The Problem<a class="headerlink" href="#the-problem" title="Permanent link">&para;</a></h2>
+<p>The certsuite deploys a privileged DaemonSet called <code>certsuite-probe</code> onto every
+node in the target cluster. This DaemonSet runs commands on the host that many
+test cases depend on (e.g., ping, platform checks). By default the probe image
+is pulled from <code>quay.io/redhat-best-practices-for-k8s/certsuite-probe:latest</code>.
+In a disconnected cluster the nodes cannot reach quay.io, so the DaemonSet fails
+to start and the certsuite cannot run.</p>
+<p>The solution is to mirror the required images into a container registry that is
+accessible from within the disconnected cluster, then tell the certsuite (or the
+cluster itself) where to find them.</p>
+<h2 id="images-required">Images Required<a class="headerlink" href="#images-required" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Image</th>
+<th>Purpose</th>
+<th>When needed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>quay.io/redhat-best-practices-for-k8s/certsuite-probe:latest</code></td>
+<td>Privileged DaemonSet for running platform-level test commands on cluster nodes</td>
+<td>Always</td>
+</tr>
+<tr>
+<td><code>quay.io/redhat-best-practices-for-k8s/certsuite:latest</code></td>
+<td>Certsuite container image</td>
+<td>Only when running the certsuite as a pod inside the cluster (see <a href="../cluster-deploy/">cluster-deploy</a>)</td>
+</tr>
+<tr>
+<td><code>quay.io/redhat-best-practices-for-k8s/oct:latest</code></td>
+<td>Offline certification database for checking container, operator, and Helm chart certification status</td>
+<td>Optional but recommended for fully disconnected environments</td>
+</tr>
+</tbody>
+</table>
+<h2 id="approach-1-oc-mirror-v2-recommended">Approach 1: oc-mirror v2 (Recommended)<a class="headerlink" href="#approach-1-oc-mirror-v2-recommended" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/openshift/oc-mirror">oc-mirror</a> is the Red Hat-supported
+tool for mirroring container images to disconnected registries. It uses an
+<code>ImageSetConfiguration</code> to declare which images to mirror and generates the
+cluster resources (IDMS/ITMS) needed to redirect image pulls to the mirror.</p>
+<p>A sample <code>ImageSetConfiguration</code> is provided in this repository at
+<a href="../examples/disconnected/imageset-config.yaml"><code>examples/disconnected/imageset-config.yaml</code></a>.</p>
+<h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
+<ul>
+<li>The <code>oc-mirror</code> plugin v2 installed on your connected workstation.
+  See the
+  <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.17/html/disconnected_environments/mirroring-images-for-a-disconnected-installation-using-the-oc-mirror-plugin-v2">oc-mirror documentation</a>
+  for installation instructions.</li>
+<li>A mirror registry accessible from both the connected workstation (for pushing)
+  and the disconnected cluster nodes (for pulling).</li>
+<li>Registry credentials configured in <code>${XDG_RUNTIME_DIR}/containers/auth.json</code>
+  (or <code>~/.docker/config.json</code>) for both the source (quay.io) and destination
+  registries.</li>
+</ul>
+<h3 id="step-1-create-the-imagesetconfiguration">Step 1: Create the ImageSetConfiguration<a class="headerlink" href="#step-1-create-the-imagesetconfiguration" title="Permanent link">&para;</a></h3>
+<p>Copy the sample configuration or create your own. At minimum, include the probe
+image:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ImageSetConfiguration</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mirror.openshift.io/v2alpha1</span>
+<span class="nt">mirror</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">additionalImages</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.io/redhat-best-practices-for-k8s/certsuite-probe:latest</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.io/redhat-best-practices-for-k8s/certsuite:latest</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.io/redhat-best-practices-for-k8s/oct:latest</span>
 </code></pre></div>
-<p>If the <em>kubeconfig</em> is not provided the value of the <code>KUBECONFIG</code> environment variable will be taken by default.</p>
-<p>The CLI output will show the following information:</p>
-<ul>
-<li>Details of the Certsuite and claim file versions, the test case filter used and the location of the output files.</li>
-<li>The results for each test case grouped into test suites (the most recent log line is shown live as each test executes).</li>
-<li>Table with the number of test cases that have passed/failed or been skipped per test suite.</li>
-<li>The log lines produced by each test case that has failed.</li>
-</ul>
-<p>Once the test run has completed, the test results can be visualized by opening the <code>results.html</code> website in a web browser and loading the <code>claim.json</code> file.</p>
-<p>For more information on how to analyze the results see <a href="../test-output/">Test Output</a>.</p>
-<h2 id="building-the-certsuite-tool-executable">Building the Certsuite tool executable<a class="headerlink" href="#building-the-certsuite-tool-executable" title="Permanent link">&para;</a></h2>
-<p>The Certsuite binary can be built as follows:</p>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>build-certsuite-tool
+<p>Remove any images you do not need. The probe image is always required.</p>
+<h3 id="step-2-mirror-images-to-disk">Step 2: Mirror images to disk<a class="headerlink" href="#step-2-mirror-images-to-disk" title="Permanent link">&para;</a></h3>
+<p>On a workstation with internet access, run:</p>
+<div class="highlight"><pre><span></span><code>oc-mirror<span class="w"> </span>-c<span class="w"> </span>imageset-config.yaml<span class="w"> </span>file:///path/to/output-dir<span class="w"> </span>--v2
 </code></pre></div>
-<h2 id="test-labels">Test labels<a class="headerlink" href="#test-labels" title="Permanent link">&para;</a></h2>
-<p>The test cases cases have several labels to allow for different types of groupings when selecting which to run. These are the following:</p>
-<ul>
-<li>The name of the test case</li>
-<li>The name of the test suite</li>
-<li>The category of the test case (common, telco, faredge, extended)</li>
-</ul>
-<p>These labels can be combined with some operators to create label filters that match any condition. For example:</p>
-<ul>
-<li>The label filter &ldquo;observability,access-control&rdquo; will match the test suites <em>observability</em> and <em>access-control</em>.</li>
-<li>The label filter &ldquo;operator &amp;&amp; !operator-crd-versioning&rdquo; will match the <em>operator</em> test suite without the <em>operator_crd_versioning</em> test case.</li>
-<li>To select all the test cases the <em>all</em> label filter can be used.</li>
-</ul>
-<p>To view which test cases will run for a specific label or label filter use the flag <code>--list</code>.</p>
-<p>See the <a href="CATALOG.md">CATALOG.md</a> to find all test labels.</p>
-<h2 id="disable-intrusive-tests">Disable intrusive tests<a class="headerlink" href="#disable-intrusive-tests" title="Permanent link">&para;</a></h2>
-<p>To skip intrusive tests which may disrupt cluster operations, issue the
-following:</p>
-<div class="highlight"><pre><span></span><code>certsuite<span class="w"> </span>run<span class="w"> </span>--intrusive<span class="o">=</span><span class="nb">false</span>
+<p>This downloads the images and writes them to disk as a portable archive.</p>
+<h3 id="step-3-transfer-the-archive">Step 3: Transfer the archive<a class="headerlink" href="#step-3-transfer-the-archive" title="Permanent link">&para;</a></h3>
+<p>Copy the output directory to the disconnected environment using whatever
+transport is available (USB drive, secure file transfer, etc.).</p>
+<h3 id="step-4-load-images-into-the-mirror-registry">Step 4: Load images into the mirror registry<a class="headerlink" href="#step-4-load-images-into-the-mirror-registry" title="Permanent link">&para;</a></h3>
+<p>On a host that can reach the mirror registry, run:</p>
+<div class="highlight"><pre><span></span><code>oc-mirror<span class="w"> </span>-c<span class="w"> </span>imageset-config.yaml<span class="w"> </span>--from<span class="w"> </span>file:///path/to/output-dir<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>docker://&lt;mirror-registry&gt;<span class="w"> </span>--v2
 </code></pre></div>
-<p>The intrusive test cases are:</p>
-<ul>
-<li><a href="https://github.com/redhat-best-practices-for-k8s/certsuite/blob/main/CATALOG.md#lifecycle-deployment-scaling">lifecycle-deployment-scaling</a></li>
-<li><a href="https://github.com/redhat-best-practices-for-k8s/certsuite/blob/main/CATALOG.md#lifecycle-statefulset-scaling">lifecycle-statefulset-scaling</a></li>
-<li><a href="https://github.com/redhat-best-practices-for-k8s/certsuite/blob/main/CATALOG.md#lifecycle-crd-scaling">lifecycle-crd-scaling</a></li>
-<li><a href="https://github.com/redhat-best-practices-for-k8s/certsuite/blob/main/CATALOG.md#lifecycle-pod-recreation">lifecycle-pod-recreation</a></li>
-</ul>
-<p>Likewise, to enable intrusive tests, set the following:</p>
-<div class="highlight"><pre><span></span><code>certsuite<span class="w"> </span>run<span class="w"> </span>--intrusive<span class="o">=</span><span class="nb">true</span>
+<p>Replace <code>&lt;mirror-registry&gt;</code> with the hostname and port of your mirror registry
+(e.g., <code>registry.example.com:5000</code>).</p>
+<h3 id="step-5-apply-the-generated-cluster-resources">Step 5: Apply the generated cluster resources<a class="headerlink" href="#step-5-apply-the-generated-cluster-resources" title="Permanent link">&para;</a></h3>
+<p>oc-mirror generates <code>ImageDigestMirrorSet</code> (IDMS) and/or <code>ImageTagMirrorSet</code>
+(ITMS) custom resources that tell the cluster to redirect image pulls from the
+original registry to the mirror. Apply them:</p>
+<div class="highlight"><pre><span></span><code>oc<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>oc-mirror-workspace/results-*/cluster-resources/
 </code></pre></div>
-<p>Intrusive tests are enabled by default.</p>
-<h2 id="selected-flags-description">Selected flags description<a class="headerlink" href="#selected-flags-description" title="Permanent link">&para;</a></h2>
-<p>The following is a non-exhaustive list of the most common flags that the <code>certsuite run</code> command accepts. To see the complete list use the <code>-h, --help</code> flag.</p>
-<ul>
-<li><code>-l, --label-filter</code>: Label expression to filter test cases. Can be a test suite or list or test suites, such as <code>"observability,access-control"</code> or a more complex expression with logical operators such as <code>"access-control &amp;&amp; !access-control-sys-admin-capability"</code>.</li>
-</ul>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If <code>-l</code> is not specified, the Test Suite will run in &lsquo;diagnostic&rsquo; mode. In this mode, no test case will run: it will only get information from the cluster (PUTs, CRDs, nodes info, etc…) to save it in the claim file. This can be used to make sure the configuration was properly set and the autodiscovery found the right pods/crds…</p>
-</div>
-<ul>
-<li>
-<p><code>-o, --output-dir</code>: Path of the local directory where test results (claim.json), the execution logs (certsuite.log), and the results artifacts file (results.tar.gz) will be available from after the container exits.</p>
-</li>
-<li>
-<p><code>-k, --kubeconfig</code>: Path to the Kubeconfig file of the target cluster.</p>
-</li>
-<li>
-<p><code>-c, --config-file</code>: Path to the <code>certsuite_config.yml</code> file.</p>
-</li>
-<li>
-<p><code>--preflight-dockerconfig</code>: Path to the Dockerconfig file to be used by the Preflight test suite</p>
-</li>
-<li>
-<p><code>--offline-db</code>: Path to an offline DB to check the certification status of container images, operators and helm charts. Defaults to the DB included in the test container image.</p>
-</li>
-</ul>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>See the <a href="https://github.com/redhat-best-practices-for-k8s/oct">OCT tool</a> for more information on how to create this DB.</p>
-</div>
-<ul>
-<li>
-<p><code>--allow-non-running</code>: Include non-Running pods during the autodiscovery phase. Disabled by default; enable this if your workloads include pods in CrashLoopBackOff or other non-running states that still need testing.</p>
-</li>
-<li>
-<p><code>--sanitize-claim</code>: Sanitize the claim.json file by removing sensitive data before sending it to the collector. Only relevant when <code>--enable-data-collection</code> is enabled.</p>
-</li>
-<li>
-<p><code>--include-web-files</code>: Save the HTML results viewer files in the configured output folder alongside the claim.json and log files.</p>
-</li>
-<li>
-<p><code>--create-xml-junit-file</code>: Generate a JUnit XML file with the test results, useful for CI/CD integration with systems that consume JUnit reports.</p>
-</li>
-<li>
-<p><code>--certsuite-probe-image</code>: Override the default certsuite probe daemonset image. Defaults to the version matching the certsuite release.</p>
-</li>
-<li>
-<p><code>--daemonset-cpu-req</code>, <code>--daemonset-cpu-lim</code>: Set the CPU request and limit for the probe daemonset container. Both default to <code>100m</code>.</p>
-</li>
-<li>
-<p><code>--daemonset-mem-req</code>, <code>--daemonset-mem-lim</code>: Set the memory request and limit for the probe daemonset container. Both default to <code>100M</code>.</p>
-</li>
-<li>
-<p><code>--connect-api-key</code>: API key for uploading results to the Red Hat Connect portal.</p>
-</li>
-<li>
-<p><code>--connect-project-id</code>: Project ID for uploading results to the Red Hat Connect portal.</p>
-</li>
-<li>
-<p><code>--connect-api-base-url</code>: Base URL for the Red Hat Connect API.</p>
-</li>
-<li>
-<p><code>--connect-api-proxy-url</code>, <code>--connect-api-proxy-port</code>: Proxy URL and port for the Red Hat Connect API, for environments that require HTTP proxies.</p>
-</li>
-<li>
-<p><code>--cleanup-probe</code>: Controls whether the probe daemonset and its namespace are deleted at the end of the test run. By default (true), the probe daemonset is cleaned up after tests complete. Set to <code>--cleanup-probe=false</code> to keep the probe daemonset running on the cluster for debugging or repeated test runs.</p>
-</li>
-</ul>
-<div class="highlight"><pre><span></span><code>certsuite<span class="w"> </span>run<span class="w"> </span>--cleanup-probe<span class="o">=</span><span class="nb">false</span>
+<p>Verify the resources were created:</p>
+<div class="highlight"><pre><span></span><code>oc<span class="w"> </span>get<span class="w"> </span>imagedigestmirrorset
+oc<span class="w"> </span>get<span class="w"> </span>imagetagmirrorset
 </code></pre></div>
-<p>When running in container mode, add the flag to the certsuite command:</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--network<span class="w"> </span>host<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-v<span class="w"> </span>&lt;path-to-local-dir&gt;/config:/usr/certsuite/config:Z<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-v<span class="w"> </span>&lt;path-to-local-dir&gt;/results:/usr/certsuite/results:Z<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>quay.io/redhat-best-practices-for-k8s/certsuite:latest<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>certsuite<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--kubeconfig<span class="o">=</span>/usr/certsuite/config/kubeconfig<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--config-file<span class="o">=</span>/usr/certsuite/config/certsuite_config.yml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--output-dir<span class="o">=</span>/usr/certsuite/results<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--label-filter<span class="o">=</span>all<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--cleanup-probe<span class="o">=</span><span class="nb">false</span>
+<p>After applying these resources, the cluster nodes will automatically pull images
+from the mirror registry when a pod references the original quay.io path. This
+means the certsuite can run with its default configuration and the probe
+DaemonSet will pull its image from the mirror transparently.</p>
+<h3 id="step-6-run-the-certsuite">Step 6: Run the certsuite<a class="headerlink" href="#step-6-run-the-certsuite" title="Permanent link">&para;</a></h3>
+<p>With IDMS/ITMS in place, the certsuite can be run normally:</p>
+<div class="highlight"><pre><span></span><code>certsuite<span class="w"> </span>run<span class="w"> </span>-l<span class="w"> </span>&lt;label-filter&gt;<span class="w"> </span>-c<span class="w"> </span>&lt;config-file&gt;<span class="w"> </span>-k<span class="w"> </span>&lt;kubeconfig&gt;<span class="w"> </span>-o<span class="w"> </span>&lt;output-dir&gt;
 </code></pre></div>
-<h2 id="using-the-container-image">Using the container image<a class="headerlink" href="#using-the-container-image" title="Permanent link">&para;</a></h2>
-<p>The only prerequisite for running the Test Suite in container mode is having Docker or Podman installed.</p>
-<h3 id="pull-the-test-image">Pull the test image<a class="headerlink" href="#pull-the-test-image" title="Permanent link">&para;</a></h3>
-<p>The test image is available at this <a href="https://quay.io/repository/redhat-best-practices-for-k8s/certsuite">repository</a> and can be pulled using:</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>pull<span class="w"> </span>quay.io/redhat-best-practices-for-k8s/certsuite:&lt;image-tag&gt;
+<p>If you prefer to be explicit, you can also override the probe image path
+directly:</p>
+<div class="highlight"><pre><span></span><code>certsuite<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--certsuite-probe-image<span class="o">=</span>&lt;mirror-registry&gt;/redhat-best-practices-for-k8s/certsuite-probe:latest<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-l<span class="w"> </span>&lt;label-filter&gt;<span class="w"> </span>-c<span class="w"> </span>&lt;config-file&gt;<span class="w"> </span>-k<span class="w"> </span>&lt;kubeconfig&gt;<span class="w"> </span>-o<span class="w"> </span>&lt;output-dir&gt;
 </code></pre></div>
-<p>The image tag can be <code>latest</code> to select the latest release, <code>unstable</code> to fetch the image built with the latest commit in the repository or any existing version number such as <code>v5.2.1</code>.</p>
-<h3 id="launch-the-test-suite">Launch the Test Suite<a class="headerlink" href="#launch-the-test-suite" title="Permanent link">&para;</a></h3>
-<p>The Test Suite requires 3 files that must be provided to the test container:</p>
-<ul>
-<li>The <em>Kubeconfig</em> for the target cluster.</li>
-<li>The <em>Dockerconfig</em> of the local Docker installation (only for the Preflight test suite).</li>
-<li>The <code>certsuite_config.yml</code>.</li>
-</ul>
-<p>To reduce the number of shared volumes with the test container in the example below those files are copied into a folder called &ldquo;config&rdquo;. Also, another folder to contain the output files called &ldquo;results&rdquo; has been created. The files saved in the output directory after the test run are:</p>
-<ul>
-<li>A <code>claim.json</code> file with the test results.</li>
-<li>A <code>certsuite.log</code> file with the execution logs.</li>
-<li>A <code>.tar.gz</code> file with the above two files and an additional <code>results.html</code> file to visualize the results in a website.</li>
-</ul>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--network<span class="w"> </span>host<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-v<span class="w"> </span>&lt;path-to-local-dir&gt;/config:/usr/certsuite/config:Z<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-v<span class="w"> </span>&lt;path-to-local-dir&gt;/results:/usr/certsuite/results:Z<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>quay.io/redhat-best-practices-for-k8s/certsuite:latest<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>certsuite<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--kubeconfig<span class="o">=</span>/usr/certsuite/config/kubeconfig<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--preflight-dockerconfig<span class="o">=</span>/usr/certsuite/config/dockerconfig<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--config-file<span class="o">=</span>/usr/certsuite/config/certsuite_config.yml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--output-dir<span class="o">=</span>/usr/certsuite/results<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--label-filter<span class="o">=</span>all
+<h2 id="approach-2-manual-mirroring-with-skopeo">Approach 2: Manual Mirroring with skopeo<a class="headerlink" href="#approach-2-manual-mirroring-with-skopeo" title="Permanent link">&para;</a></h2>
+<p>If you already have a mirror registry configured and do not want to use
+oc-mirror, you can copy images manually with
+<a href="https://github.com/containers/skopeo">skopeo</a>.</p>
+<h3 id="step-1-copy-images-to-the-mirror-registry">Step 1: Copy images to the mirror registry<a class="headerlink" href="#step-1-copy-images-to-the-mirror-registry" title="Permanent link">&para;</a></h3>
+<p>On a connected workstation, copy each image:</p>
+<div class="highlight"><pre><span></span><code>skopeo<span class="w"> </span>copy<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>docker://quay.io/redhat-best-practices-for-k8s/certsuite-probe:latest<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>docker://&lt;mirror-registry&gt;/redhat-best-practices-for-k8s/certsuite-probe:latest
+
+skopeo<span class="w"> </span>copy<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>docker://quay.io/redhat-best-practices-for-k8s/certsuite:latest<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>docker://&lt;mirror-registry&gt;/redhat-best-practices-for-k8s/certsuite:latest
+
+skopeo<span class="w"> </span>copy<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>docker://quay.io/redhat-best-practices-for-k8s/oct:latest<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>docker://&lt;mirror-registry&gt;/redhat-best-practices-for-k8s/oct:latest
+</code></pre></div>
+<p>If the connected workstation cannot reach the mirror registry directly, use
+<code>skopeo copy</code> to save images to a directory or tarball, transfer them, then push
+from the disconnected side:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># On connected host</span>
+skopeo<span class="w"> </span>copy<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>docker://quay.io/redhat-best-practices-for-k8s/certsuite-probe:latest<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>dir:///path/to/certsuite-probe
+
+<span class="c1"># Transfer /path/to/certsuite-probe to the disconnected environment</span>
+
+<span class="c1"># On disconnected host</span>
+skopeo<span class="w"> </span>copy<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>dir:///path/to/certsuite-probe<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>docker://&lt;mirror-registry&gt;/redhat-best-practices-for-k8s/certsuite-probe:latest
+</code></pre></div>
+<h3 id="step-2-run-the-certsuite-with-the-mirrored-probe-image">Step 2: Run the certsuite with the mirrored probe image<a class="headerlink" href="#step-2-run-the-certsuite-with-the-mirrored-probe-image" title="Permanent link">&para;</a></h3>
+<p>Unlike oc-mirror, skopeo does not generate IDMS/ITMS resources. You must tell
+the certsuite where to find the probe image using the <code>--certsuite-probe-image</code>
+flag:</p>
+<div class="highlight"><pre><span></span><code>certsuite<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--certsuite-probe-image<span class="o">=</span>&lt;mirror-registry&gt;/redhat-best-practices-for-k8s/certsuite-probe:latest<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-l<span class="w"> </span>&lt;label-filter&gt;<span class="w"> </span>-c<span class="w"> </span>&lt;config-file&gt;<span class="w"> </span>-k<span class="w"> </span>&lt;kubeconfig&gt;<span class="w"> </span>-o<span class="w"> </span>&lt;output-dir&gt;
+</code></pre></div>
+<p>Alternatively, set the <code>SUPPORT_IMAGE</code> environment variable:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">SUPPORT_IMAGE</span><span class="o">=</span>&lt;mirror-registry&gt;/redhat-best-practices-for-k8s/certsuite-probe:latest
+certsuite<span class="w"> </span>run<span class="w"> </span>-l<span class="w"> </span>&lt;label-filter&gt;<span class="w"> </span>-c<span class="w"> </span>&lt;config-file&gt;<span class="w"> </span>-k<span class="w"> </span>&lt;kubeconfig&gt;<span class="w"> </span>-o<span class="w"> </span>&lt;output-dir&gt;
+</code></pre></div>
+<h2 id="offline-certification-database">Offline Certification Database<a class="headerlink" href="#offline-certification-database" title="Permanent link">&para;</a></h2>
+<p>The certsuite checks whether container images, operators, and Helm charts are
+Red Hat certified. In a disconnected environment, the certsuite cannot reach the
+Red Hat catalog APIs. The <a href="https://github.com/redhat-best-practices-for-k8s/oct">OCT tool</a>
+provides an offline database for these checks.</p>
+<h3 id="creating-the-offline-database">Creating the offline database<a class="headerlink" href="#creating-the-offline-database" title="Permanent link">&para;</a></h3>
+<p>On a connected host, run the OCT container to dump the database:</p>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>-p<span class="w"> </span>offline-db
+
+docker<span class="w"> </span>run<span class="w"> </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/offline-db:/tmp/dump:Z<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--user<span class="w"> </span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span>:<span class="k">$(</span>id<span class="w"> </span>-g<span class="k">)</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--env<span class="w"> </span><span class="nv">OCT_DUMP_ONLY</span><span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>quay.io/redhat-best-practices-for-k8s/oct:latest
+</code></pre></div>
+<p>If you have already mirrored the OCT image, pull it from your mirror registry
+instead.</p>
+<h3 id="using-the-offline-database">Using the offline database<a class="headerlink" href="#using-the-offline-database" title="Permanent link">&para;</a></h3>
+<p>Transfer the <code>offline-db</code> directory to your disconnected jumpbox, then pass it
+to the certsuite:</p>
+<div class="highlight"><pre><span></span><code>certsuite<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--offline-db<span class="o">=</span>/path/to/offline-db<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--certsuite-probe-image<span class="o">=</span>&lt;mirror-registry&gt;/redhat-best-practices-for-k8s/certsuite-probe:latest<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-l<span class="w"> </span>&lt;label-filter&gt;<span class="w"> </span>-c<span class="w"> </span>&lt;config-file&gt;<span class="w"> </span>-k<span class="w"> </span>&lt;kubeconfig&gt;<span class="w"> </span>-o<span class="w"> </span>&lt;output-dir&gt;
+</code></pre></div>
+<h2 id="verification">Verification<a class="headerlink" href="#verification" title="Permanent link">&para;</a></h2>
+<h3 id="verify-images-are-in-the-mirror-registry">Verify images are in the mirror registry<a class="headerlink" href="#verify-images-are-in-the-mirror-registry" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>skopeo<span class="w"> </span>inspect<span class="w"> </span>docker://&lt;mirror-registry&gt;/redhat-best-practices-for-k8s/certsuite-probe:latest
+</code></pre></div>
+<h3 id="verify-idmsitms-is-active-oc-mirror-approach-only">Verify IDMS/ITMS is active (oc-mirror approach only)<a class="headerlink" href="#verify-idmsitms-is-active-oc-mirror-approach-only" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>oc<span class="w"> </span>get<span class="w"> </span>imagedigestmirrorset
+oc<span class="w"> </span>get<span class="w"> </span>imagetagmirrorset
+</code></pre></div>
+<h3 id="verify-the-probe-daemonset-starts">Verify the probe DaemonSet starts<a class="headerlink" href="#verify-the-probe-daemonset-starts" title="Permanent link">&para;</a></h3>
+<p>Run the certsuite with <code>--cleanup-probe=false</code> to keep the probe running after
+tests complete, then verify the DaemonSet pods are running:</p>
+<div class="highlight"><pre><span></span><code>oc<span class="w"> </span>get<span class="w"> </span>daemonset<span class="w"> </span>-n<span class="w"> </span>certsuite
+oc<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>certsuite
 </code></pre></div>
 
 

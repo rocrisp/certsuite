@@ -37,6 +37,14 @@ OPERATORS_UNDER_TEST=""
 CERTSUITE_IMAGE_NAME=quay.io/redhat-best-practices-for-k8s/certsuite
 CERTSUITE_IMAGE_TAG=unstable
 
+# Test Configuration Bundle settings
+# "centralized" = clone TestConfigurationBundle repo (temporary, current approach)
+# "packagemanifest" = discover operator repo via packagemanifest, find bundle at test/certification/ (future)
+TEST_BUNDLE_SOURCE="${TEST_BUNDLE_SOURCE:-centralized}"
+TEST_BUNDLE_REPO="${TEST_BUNDLE_REPO:-https://github.com/opdev/TestConfigurationBundle.git}"
+TEST_BUNDLE_BRANCH="${TEST_BUNDLE_BRANCH:-main}"
+TEST_BUNDLE_DIR=""
+
 # OUTPUTS
 
 # Colors
@@ -448,6 +456,99 @@ create_catalog() {
 	wait_pods_ok
 }
 
+clone_test_bundles() {
+	if [ "$TEST_BUNDLE_SOURCE" != "centralized" ]; then
+		return 0
+	fi
+
+	TEST_BUNDLE_DIR=$(mktemp -d)
+	echo_color "$BLUE" "Cloning test bundle repo: %s (branch: %s)" "$TEST_BUNDLE_REPO" "$TEST_BUNDLE_BRANCH"
+	if git clone --depth 1 --branch "$TEST_BUNDLE_BRANCH" "$TEST_BUNDLE_REPO" "$TEST_BUNDLE_DIR" 2>>"$LOG_FILE_PATH"; then
+		echo_color "$BLUE" "Test bundle repo cloned to %s" "$TEST_BUNDLE_DIR"
+	else
+		echo_color "$RED" "Warning: Failed to clone test bundle repo. Operand installation will be skipped."
+		TEST_BUNDLE_DIR=""
+	fi
+}
+
+get_bundle_dir() {
+	local package_name=$1
+
+	if [ "$TEST_BUNDLE_SOURCE" = "centralized" ]; then
+		if [ -z "$TEST_BUNDLE_DIR" ]; then
+			return 0
+		fi
+		local bundle_path
+		bundle_path=$(yq -r ".operators.\"$package_name\".bundle_path // empty" "$TEST_BUNDLE_DIR/operator-map.yaml" 2>/dev/null)
+		if [ -n "$bundle_path" ] && [ -d "$TEST_BUNDLE_DIR/$bundle_path" ]; then
+			echo "$TEST_BUNDLE_DIR/$bundle_path"
+		fi
+	elif [ "$TEST_BUNDLE_SOURCE" = "packagemanifest" ]; then
+		# Future: discover operator repo via oc get packagemanifest,
+		# clone it, return path to test/certification/ directory
+		echo_color "$GREY" "packagemanifest bundle source not yet implemented" >&2
+	fi
+}
+
+install_operands() {
+	local package_name=$1
+	local namespace=$2
+
+	local bundle_dir
+	bundle_dir=$(get_bundle_dir "$package_name")
+	if [ -z "$bundle_dir" ]; then
+		echo_color "$GREY" "No test bundle found for %s, skipping operand install" "$package_name"
+		return 0
+	fi
+
+	echo_color "$BLUE" "Installing operands for %s from test bundle" "$package_name"
+
+	if [ -f "$bundle_dir/00-prerequisites.yaml" ]; then
+		echo_color "$BLUE" "Applying prerequisites for %s" "$package_name"
+		oc apply -f "$bundle_dir/00-prerequisites.yaml" 2>>"$LOG_FILE_PATH" || {
+			echo_color "$RED" "Failed to apply prerequisites for %s" "$package_name"
+			return 1
+		}
+	fi
+
+	local primary_cr
+	primary_cr=$(yq -r '.operand.primary_cr // empty' "$bundle_dir/metadata.yaml" 2>/dev/null)
+	if [ -n "$primary_cr" ] && [ -f "$bundle_dir/$primary_cr" ]; then
+		echo_color "$BLUE" "Applying primary CR (%s) for %s" "$primary_cr" "$package_name"
+		oc apply -f "$bundle_dir/$primary_cr" 2>>"$LOG_FILE_PATH" || {
+			echo_color "$RED" "Failed to apply primary CR for %s" "$package_name"
+			return 1
+		}
+	fi
+
+	if [ -x "$bundle_dir/validate.sh" ]; then
+		local timeout_secs
+		timeout_secs=$(yq -r '.health_check.timeout_seconds // 300' "$bundle_dir/metadata.yaml" 2>/dev/null)
+		echo_color "$BLUE" "Running validation for %s (timeout: %ss)" "$package_name" "$timeout_secs"
+		if timeout "$timeout_secs" "$bundle_dir/validate.sh" "$namespace" 2>>"$LOG_FILE_PATH"; then
+			echo_color "$GREEN" "Operand validation passed for %s" "$package_name"
+		else
+			echo_color "$RED" "Operand validation failed for %s" "$package_name"
+			return 1
+		fi
+	fi
+
+	return 0
+}
+
+teardown_operands() {
+	local package_name=$1
+
+	local bundle_dir
+	bundle_dir=$(get_bundle_dir "$package_name")
+	if [ -z "$bundle_dir" ] || [ ! -f "$bundle_dir/teardown.yaml" ]; then
+		return 0
+	fi
+
+	echo_color "$BLUE" "Tearing down operands for %s" "$package_name"
+	oc delete -f "$bundle_dir/teardown.yaml" --ignore-not-found 2>>"$LOG_FILE_PATH" || true
+}
+
 wait_pods_ok() {
 	local \
 		start_time \
@@ -555,6 +656,9 @@ else
   ./run-basic-batch-operators-test.sh registry.redhat.io/redhat-operators "file-integrity-operator kiali-ossm"'
 	exit 1
 fi
+
+# Clone test configuration bundles
+clone_test_bundles
 
 # Check for docker config file
 if [ ! -e "$DOCKER_CONFIG" ]; then
@@ -790,6 +894,12 @@ EOF
 		fi
 	fi
 
+	# Generic operand installation from test bundle
+	install_operands "$actual_package_name" "$ns" || {
+		report_failure "$status" "$ns" "$actual_package_name" "$skip_cleanup" "Operand installation failed"
+		continue
+	}
+
 	echo_color "$BLUE" "Wait to ensure all pods are running"
 	# Extra wait to ensure that all pods are running
 	sleep 30
@@ -872,6 +982,9 @@ EOF
 		echo_color "$RED" "Error, failed to unlabel the operator"
 	fi
 
+	# Teardown operands before operator uninstall
+	teardown_operands "$actual_package_name"
+
 	# Check if cleanup should be skipped (+ suffix or legacy lvms/odf operators)
 	if [ "$skip_cleanup" = true ] || [ "$actual_package_name" = "lvms-operator" ] || [ "$actual_package_name" = "odf-operator" ]; then
 		echo_color "$BLUE" "Skipping uninstall and namespace deletion for $actual_package_name"
@@ -945,6 +1058,11 @@ done <"$OPERATOR_LIST_PATH"
 echo_color "$BLUE" "Remove Catalog"
 if ! oc delete catalogsources -n "$OPERATOR_CATALOG_NAMESPACE" "$OPERATOR_CATALOG_NAME"; then
 	echo_color "$RED" "Error, failed to delete catalog: $OPERATOR_CATALOG_NAME"
+fi
+
+# Clean up test bundle temp directory
+if [ -n "$TEST_BUNDLE_DIR" ]; then
+	rm -rf "$TEST_BUNDLE_DIR"
 fi
 
 # closing html file

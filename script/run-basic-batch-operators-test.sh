@@ -511,21 +511,19 @@ install_operands() {
 		}
 	fi
 
-	local primary_cr
-	primary_cr=$(yq -r '.operand.primary_cr // empty' "$bundle_dir/metadata.yaml" 2>/dev/null)
-	if [ -n "$primary_cr" ] && [ -f "$bundle_dir/$primary_cr" ]; then
-		echo_color "$BLUE" "Applying primary CR (%s) for %s" "$primary_cr" "$package_name"
-		oc apply -f "$bundle_dir/$primary_cr" 2>>"$LOG_FILE_PATH" || {
-			echo_color "$RED" "Failed to apply primary CR for %s" "$package_name"
+	if [ -f "$bundle_dir/01-operand-crs.yaml" ]; then
+		echo_color "$BLUE" "Applying operand CRs for %s" "$package_name"
+		oc apply -f "$bundle_dir/01-operand-crs.yaml" 2>>"$LOG_FILE_PATH" || {
+			echo_color "$RED" "Failed to apply operand CRs for %s" "$package_name"
 			return 1
 		}
 	fi
 
-	if [ -x "$bundle_dir/validate.sh" ]; then
+	if [ -x "$bundle_dir/02-validate.sh" ]; then
 		local timeout_secs
 		timeout_secs=$(yq -r '.health_check.timeout_seconds // 300' "$bundle_dir/metadata.yaml" 2>/dev/null)
 		echo_color "$BLUE" "Running validation for %s (timeout: %ss)" "$package_name" "$timeout_secs"
-		if timeout "$timeout_secs" "$bundle_dir/validate.sh" "$namespace" 2>>"$LOG_FILE_PATH"; then
+		if timeout "$timeout_secs" "$bundle_dir/02-validate.sh" "$namespace" 2>>"$LOG_FILE_PATH"; then
 			echo_color "$GREEN" "Operand validation passed for %s" "$package_name"
 		else
 			echo_color "$RED" "Operand validation failed for %s" "$package_name"

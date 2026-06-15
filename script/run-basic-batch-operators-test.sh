@@ -479,7 +479,7 @@ get_bundle_dir() {
 			return 0
 		fi
 		local bundle_path
-		bundle_path=$(yq -r ".operators.\"$package_name\".bundle_path // empty" "$TEST_BUNDLE_DIR/operator-map.yaml" 2>/dev/null)
+		bundle_path=$(yq -r ".operators.\"$package_name\".bundle_path // \"\"" "$TEST_BUNDLE_DIR/operator-map.yaml" 2>/dev/null)
 		if [ -n "$bundle_path" ] && [ -d "$TEST_BUNDLE_DIR/$bundle_path" ]; then
 			echo "$TEST_BUNDLE_DIR/$bundle_path"
 		fi
